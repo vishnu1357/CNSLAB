@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char msg[100],key[100];
+    printf("Enter the plaintext: ");
+    scanf("%s",&msg);
+    printf("Enter the key: ");
+    scanf("%s",&key);
+    int msgLen = strlen(msg), keyLen = strlen(key), i, j;
+    char newKey[msgLen], encryptedMsg[msgLen], decryptedMsg[msgLen];
+    for(i = 0, j = 0; i < msgLen; ++i, ++j)
+	{
+        if(j == keyLen)
+            j = 0;
+        newKey[i] = key[j];
+    }
+    newKey[i] = '\0';
+     for(i = 0; i < msgLen; ++i)
+     if(islower(msg[i])) 
+	 {
+       encryptedMsg[i] = ((msg[i] - 'a' + newKey[i] - 'a') % 26) + 'a';
+   }
+   else 
+   {
+       encryptedMsg[i] = ((msg[i] - 'A' + newKey[i] - 'a') % 26) + 'A';
+   }
+    encryptedMsg[i] = '\0';
+    for(i = 0; i < msgLen; ++i)
+    if(islower(msg[i])) 
+	{
+       decryptedMsg[i] = (((encryptedMsg[i] -'a' - newKey[i] + 'a') + 26) % 26) + 'a';
+   }
+   else
+   {
+       decryptedMsg[i] = (((encryptedMsg[i] - 'A' - newKey[i] + 'a') + 26) % 26) + 'A';
+   }
+    decryptedMsg[i] = '\0';
+    printf("\nNew Generated Key: %s", newKey);
+    printf("\nEncrypted Message: %s", encryptedMsg);
+    printf("\nDecrypted Message: %s", decryptedMsg);
+return 0;
+}
